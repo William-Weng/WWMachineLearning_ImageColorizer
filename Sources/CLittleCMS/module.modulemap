@@ -1,0 +1,4 @@
+module CLittleCMS {
+    header "littlecms/lcms2.h"
+    export *
+}
