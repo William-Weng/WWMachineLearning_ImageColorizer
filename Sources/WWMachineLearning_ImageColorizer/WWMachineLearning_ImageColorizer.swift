@@ -10,13 +10,14 @@ import CoreML
 import WWNetworking
 import WWMachineLearning_Resnet50
 
-// MARK: - WWMachineLearning.Resnet50
+// MARK: - WWMachineLearning.ImageColorizer
 extension WWMachineLearning {
     
     public class ImageColorizer {
         
         public static let shared = ImageColorizer()
         
+        private let modelUrlString = "https://github.com/William-Weng/WWMachineLearning_ImageColorizer/releases/download/1.0.0/CoremlColorizer.mlmodel"
         private var model: MLModel?
 
         private init() {}
@@ -32,9 +33,7 @@ public extension WWMachineLearning.ImageColorizer {
     ///   - progress: 下載進度
     ///   - completion: Result<URL, Error>
     func loadModel(progress: ((WWNetworking.DownloadProgressInformation) -> Void)? = nil, completion: @escaping (Result<URL, Error>) -> Void) {
-        
-        let modelUrlString = "https://github.com/William-Weng/MLImageColorizer/releases/download/v0.0.2/CoremlColorizer.mlmodel"
-        
+                
         guard let modelUrl = URL(string: modelUrlString),
               let folder = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
         else {
