@@ -16,8 +16,7 @@ let package = Package(
     ],
     targets: [
         .target(name: "WWMachineLearning_ImageColorizer", dependencies: ["WWMachineLearning_Resnet50", "CLittleCMS"], resources: [.copy("Privacy"), .process("ICC")]),
-        .target(name: "CLittleCMS", dependencies: [], path: "Sources/CLittleCMS", sources: ["littlecms"], publicHeadersPath: "littlecms"
-        )
+        .target(name: "CLittleCMS", dependencies: [], path: "Sources/CLittleCMS", sources: ["littlecms"], publicHeadersPath: "littlecms")
     ],
     swiftLanguageVersions: [
         .v5
