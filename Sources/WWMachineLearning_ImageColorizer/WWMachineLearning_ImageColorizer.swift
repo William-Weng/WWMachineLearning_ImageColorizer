@@ -33,7 +33,7 @@ public extension WWMachineLearning.ImageColorizer {
     ///   - progress: 下載進度
     ///   - completion: Result<URL, Error>
     func loadModel(progress: ((WWNetworking.DownloadProgressInformation) -> Void)? = nil, completion: @escaping (Result<URL, Error>) -> Void) {
-                
+        
         guard let modelUrl = URL(string: modelUrlString),
               let folder = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
         else {
@@ -65,12 +65,14 @@ public extension WWMachineLearning.ImageColorizer {
     /// - Parameters:
     ///   - inputImage: UIImage
     ///   - completion: Result<UIImage?, Error>
-    func colorize(image inputImage: UIImage, completion: @escaping (Result<UIImage?, Error>) -> Void)  {
+    func colorize(image inputImage: UIImage?, completion: @escaping (Result<UIImage?, Error>) -> Void)  {
+        
+        guard let model else { completion(.failure(WWMachineLearning.CustomError.notModelLoaded)); return }
+        guard let inputImage else { completion(.failure(WWMachineLearning.CustomError.isImageEmpty)); return }
         
         var rescaledImage: UIImage?
-        if (inputImage.scale != 1.0) { rescaledImage = inputImage._rescaled(1.0, orientation: inputImage.imageOrientation) }
         
-        guard let model else { return }
+        if (inputImage.scale != 1.0) { rescaledImage = inputImage._rescaled(1.0, orientation: inputImage.imageOrientation) }
         
         DispatchQueue.global().async {
             ImageColorizerTool.shared.colorize(model: model, image: rescaledImage ?? inputImage) { result in
@@ -94,7 +96,7 @@ public extension WWMachineLearning.ImageColorizer {
     /// - Parameters:
     ///   - inputImage: UIImage
     /// - Returns: Result<UIImage?, Error>
-    func colorize(image inputImage: UIImage) async -> Result<UIImage?, Error> {
+    func colorize(image inputImage: UIImage?) async -> Result<UIImage?, Error> {
         
         await withCheckedContinuation { continuation in
             colorize(image: inputImage) { continuation.resume(returning: $0) }

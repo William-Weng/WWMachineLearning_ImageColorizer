@@ -109,4 +109,28 @@ extension UIImage {
         
         return UIImage(cgImage: cgimage)
     }
+    
+    /// 將灰階色域 (Mono) 圖片轉換為彩色色域 (RGBA) 圖片
+    /// - Returns: UIImage?
+    func _monochromeColorSpaceToSRGB() -> UIImage? {
+        guard let cgImage = cgImage?._monochromeColorSpaceToSRGB() else { return nil }
+        return UIImage(cgImage: cgImage)
+    }
+}
+
+// MARK: - CGImage (function)
+extension CGImage {
+    
+    /// 將灰階色域 (Mono) 圖片轉換為彩色色域 (RGBA) 圖片
+    /// - Returns: CGImage?
+    func _monochromeColorSpaceToSRGB() -> CGImage? {
+        
+        let size = CGSize(width: width, height: height)
+        let bitmapInfo = CGImageAlphaInfo.premultipliedLast.rawValue
+        
+        guard let context = CGContext._build(with: bitmapInfo, size: size, pixelData: nil, bitsPerComponent: 8, bytesPerRow: width * 4, colorSpace: CGColorSpaceCreateDeviceRGB()) else { return nil }
+        
+        context.draw(self, in: CGRect(origin: .zero, size: size))
+        return context.makeImage()
+    }
 }

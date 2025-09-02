@@ -9,7 +9,7 @@
 
 ```bash
 dependencies: [
-    .package(url: "https://github.com/William-Weng/WWMachineLearning_ImageColorizer.git", .upToNextMajor(from: "1.0.0"))
+    .package(url: "https://github.com/William-Weng/WWMachineLearning_ImageColorizer.git", .upToNextMajor(from: "1.0.2"))
 ]
 ```
 
@@ -35,20 +35,15 @@ final class ViewController: UIViewController {
 
     @IBOutlet weak var monoImageView: UIImageView!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
     @IBAction func colorize(_ sender: UIButton) {
         
-        let image = monoImageView.image
-        WWHUD.shared.display()
-        
         Task {
-            _ = await WWMachineLearning.ImageColorizer.shared.loadModel()
-            let colorizedResult = await WWMachineLearning.ImageColorizer.shared.colorize(image: image!)
+            WWHUD.shared.display()
             
+            _ = await WWMachineLearning.ImageColorizer.shared.loadModel()
+            let colorizedResult = await WWMachineLearning.ImageColorizer.shared.colorize(image: monoImageView.image)
             try monoImageView.image = colorizedResult.get()
+            
             WWHUD.shared.dismiss()
         }
     }

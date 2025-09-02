@@ -23,6 +23,10 @@ struct ImageColorizerTool {
     func colorize(model: MLModel, image inputImage: UIImage, completion: @escaping (Result<UIImage?, Error>) -> Void)  {
         
         var rescaledImage: UIImage?
+        
+        guard let cgImage = inputImage.cgImage else { return }
+        
+        if (cgImage.colorSpace?.model == .monochrome) { rescaledImage = inputImage._monochromeColorSpaceToSRGB() }
         if (inputImage.scale != 1.0) { rescaledImage = inputImage._rescaled(1.0, orientation: inputImage.imageOrientation) }
         
         DispatchQueue.global().async {
