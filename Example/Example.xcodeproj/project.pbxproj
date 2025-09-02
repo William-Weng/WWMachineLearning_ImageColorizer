@@ -428,7 +428,7 @@
 			repositoryURL = "https://github.com/William-Weng/WWMachineLearning_ImageColorizer";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.1;
+				minimumVersion = 1.0.2;
 			};
 		};
 		81932BEE2E619D9D009E4291 /* XCRemoteSwiftPackageReference "WWHUD" */ = {
