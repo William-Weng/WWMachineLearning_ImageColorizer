@@ -73,7 +73,9 @@ public extension WWMachineLearning.ImageColorizer {
         guard let model else { return }
         
         DispatchQueue.global().async {
-            ImageColorizerTool.shared.colorize(model: model, image: rescaledImage ?? inputImage) { DispatchQueue.main.async { completion($0) }}
+            ImageColorizerTool.shared.colorize(model: model, image: rescaledImage ?? inputImage) { result in
+                DispatchQueue.main.async { completion(result) }
+            }
         }
     }
     

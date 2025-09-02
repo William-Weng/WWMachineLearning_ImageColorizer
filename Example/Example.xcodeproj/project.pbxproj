@@ -3,17 +3,17 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		812ACDA72E66A1810047C803 /* WWMachineLearning_ImageColorizer in Frameworks */ = {isa = PBXBuildFile; productRef = 812ACDA62E66A1810047C803 /* WWMachineLearning_ImageColorizer */; };
 		813DF9282E6545E90036C13D /* WWHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 813DF9272E6545E90036C13D /* WWHUD */; };
 		817567FC2CA2C2B400B24577 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817567FB2CA2C2B400B24577 /* AppDelegate.swift */; };
 		817568002CA2C2B400B24577 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817567FF2CA2C2B400B24577 /* ViewController.swift */; };
 		817568032CA2C2B400B24577 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 817568012CA2C2B400B24577 /* Main.storyboard */; };
 		817568052CA2C2B500B24577 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 817568042CA2C2B500B24577 /* Assets.xcassets */; };
 		817568082CA2C2B500B24577 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 817568062CA2C2B500B24577 /* LaunchScreen.storyboard */; };
-		81E71FFF2E654A43005D4648 /* WWMachineLearning_ImageColorizer in Frameworks */ = {isa = PBXBuildFile; productRef = 81E71FFE2E654A43005D4648 /* WWMachineLearning_ImageColorizer */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,7 +31,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81E71FFF2E654A43005D4648 /* WWMachineLearning_ImageColorizer in Frameworks */,
+				812ACDA72E66A1810047C803 /* WWMachineLearning_ImageColorizer in Frameworks */,
 				813DF9282E6545E90036C13D /* WWHUD in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -126,7 +126,7 @@
 			name = Example;
 			packageProductDependencies = (
 				813DF9272E6545E90036C13D /* WWHUD */,
-				81E71FFE2E654A43005D4648 /* WWMachineLearning_ImageColorizer */,
+				812ACDA62E66A1810047C803 /* WWMachineLearning_ImageColorizer */,
 			);
 			productName = Example;
 			productReference = 817567F82CA2C2B400B24577 /* Example.app */;
@@ -158,7 +158,7 @@
 			mainGroup = 817567EF2CA2C2B400B24577;
 			packageReferences = (
 				81932BEE2E619D9D009E4291 /* XCRemoteSwiftPackageReference "WWHUD" */,
-				81866B932E654A090069B309 /* XCRemoteSwiftPackageReference "WWMachineLearning_ImageColorizer" */,
+				812ACDA52E66A1810047C803 /* XCLocalSwiftPackageReference "../../WWMachineLearning_ImageColorizer" */,
 			);
 			productRefGroup = 817567F92CA2C2B400B24577 /* Products */;
 			projectDirPath = "";
@@ -422,15 +422,14 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		81866B932E654A090069B309 /* XCRemoteSwiftPackageReference "WWMachineLearning_ImageColorizer" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/William-Weng/WWMachineLearning_ImageColorizer";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.1;
-			};
+/* Begin XCLocalSwiftPackageReference section */
+		812ACDA52E66A1810047C803 /* XCLocalSwiftPackageReference "../../WWMachineLearning_ImageColorizer" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../../WWMachineLearning_ImageColorizer;
 		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCRemoteSwiftPackageReference section */
 		81932BEE2E619D9D009E4291 /* XCRemoteSwiftPackageReference "WWHUD" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/William-Weng/WWHUD";
@@ -442,15 +441,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		812ACDA62E66A1810047C803 /* WWMachineLearning_ImageColorizer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WWMachineLearning_ImageColorizer;
+		};
 		813DF9272E6545E90036C13D /* WWHUD */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 81932BEE2E619D9D009E4291 /* XCRemoteSwiftPackageReference "WWHUD" */;
 			productName = WWHUD;
-		};
-		81E71FFE2E654A43005D4648 /* WWMachineLearning_ImageColorizer */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 81866B932E654A090069B309 /* XCRemoteSwiftPackageReference "WWMachineLearning_ImageColorizer" */;
-			productName = WWMachineLearning_ImageColorizer;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

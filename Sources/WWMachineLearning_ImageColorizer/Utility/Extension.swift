@@ -26,21 +26,20 @@ extension CGContext {
     }
 }
 
+// MARK: - CGContext (function)
 extension CGImage {
     
     /// 轉換圖片顏色組成 (1024色 => 256色)
     /// - Parameters:
     ///   - bitsPerComponent: 每一個顏色組件 =>（R, G, B, A）各用 8-bits 表示 (256色)
     ///   - bitsPerPixel: 顏色組成 =>R(8) + G(8) + B(8) + A(8) = 32-bits
-    ///   - bytesPerRow: 一列有幾bytes
-    func _convertBitsPerComponent(_ bitsPerComponent: Int, bitsPerPixel: Int, bytesPerRow: Int? = nil) -> CGImage? {
+    func _convertBitsPerComponent(_ bitsPerComponent: Int, bitsPerPixel: Int) -> CGImage? {
         
-        let bytesPerRow = bytesPerRow ?? width * bitsPerPixel / 8
+        let bytesPerRow = width * bitsPerPixel / 8
         let colorSpace = colorSpace ?? CGColorSpaceCreateDeviceRGB()
-        let bitmapInfo = CGImageAlphaInfo.noneSkipLast.rawValue
         let rect = CGRect(x: 0, y: 0, width: width, height: height)
 
-        guard let context = CGContext._build(with: bitmapInfo, size: rect.size, pixelData: nil, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, colorSpace: colorSpace) else { return nil }
+        guard let context = CGContext._build(with: bitmapInfo.rawValue, size: rect.size, pixelData: nil, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, colorSpace: colorSpace) else { return nil }
         
         context.draw(self, in: rect)
         return context.makeImage()
@@ -69,7 +68,7 @@ extension UIGraphicsImageRendererFormat {
 
 // MARK: - UIImage (function)
 extension UIImage {
-
+    
     /// 改變圖片大小
     /// - Returns: UIImage
     /// - Parameters:
@@ -101,14 +100,12 @@ extension UIImage {
     ///   - size: 大小
     ///   - bitsPerComponent: 每一個顏色組件 =>（R, G, B, A）各用 8 位表示 (256色)
     ///   - bitsPerPixel: 顏色組成 =>R(8) + G(8) + B(8) + A(8) = 32
-    ///   - bytesPerRow: 一列有幾bytes
-    /// - Returns: UIImage?
-    func _normalize(with size: CGSize, bitsPerComponent: Int, bitsPerPixel: Int, bytesPerRow: Int? = nil) -> UIImage? {
+    func _normalize(with size: CGSize, bitsPerComponent: Int, bitsPerPixel: Int) -> UIImage? {
         
         let format = UIGraphicsImageRendererFormat.default()._scale(1.0)
         let resizedImage = self._resized(for: size, format: format)
         
-        guard let cgimage = resizedImage.cgImage?._convertBitsPerComponent(bitsPerComponent, bitsPerPixel: bitsPerPixel, bytesPerRow: bytesPerRow) else { return nil }
+        guard let cgimage = resizedImage.cgImage?._convertBitsPerComponent(bitsPerComponent, bitsPerPixel: bitsPerPixel) else { return nil }
         
         return UIImage(cgImage: cgimage)
     }
