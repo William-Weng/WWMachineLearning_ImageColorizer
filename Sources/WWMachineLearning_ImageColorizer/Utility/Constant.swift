@@ -22,10 +22,4 @@ extension ImageColorizerTool {
         // model.modelDescription.outputDescriptionsByName => ["796": 796 : MultiArray (Float32, )]
         static let outptKey = "796"
     }
-    
-    /// MARK: enum
-    enum ColorizerError: Error {
-        case preprocessFailure
-        case postprocessFailure
-    }
 }

@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreML
+import WWMachineLearning_Resnet50
 
 /// MARK: 處理圖片彩色化的功能
 struct ImageColorizerTool {
@@ -116,7 +117,7 @@ private extension ImageColorizerTool {
         guard let normalizeImage = inputImage._normalize(with: Constants.inputSize, bitsPerComponent: 8, bitsPerPixel: 32),
               let lab = LCM2Utility.shared.labValues(cgImage: normalizeImage.cgImage, bundle: .module)
         else {
-            throw ColorizerError.preprocessFailure
+            throw WWMachineLearning.CustomError.preprocessFailure
         }
         
         return LabValues(l: lab[0], a: lab[1], b: lab[2])
@@ -135,7 +136,7 @@ private extension ImageColorizerTool {
               let resultImageLab = LCM2Utility.shared.labValues(cgImage: resultImage.cgImage, bundle: .module),
               let originalImageLab = LCM2Utility.shared.labValues(cgImage: originalImage.cgImage, bundle: .module)
         else {
-            throw ColorizerError.preprocessFailure
+            throw WWMachineLearning.CustomError.preprocessFailure
         }
         
         let colorizerImage = LCM2Utility.shared.image(fromLabChannels: originalImageLab[0], a: resultImageLab[1], b: resultImageLab[2], size: inputImage.size, bundle: .module)

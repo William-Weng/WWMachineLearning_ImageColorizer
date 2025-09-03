@@ -9,7 +9,7 @@
 
 ```bash
 dependencies: [
-    .package(url: "https://github.com/William-Weng/WWMachineLearning_ImageColorizer.git", .upToNextMajor(from: "1.0.2"))
+    .package(url: "https://github.com/William-Weng/WWMachineLearning_ImageColorizer.git", .upToNextMajor(from: "1.0.3"))
 ]
 ```
 

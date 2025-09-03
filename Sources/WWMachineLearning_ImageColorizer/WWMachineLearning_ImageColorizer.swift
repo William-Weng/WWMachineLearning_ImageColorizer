@@ -17,8 +17,9 @@ extension WWMachineLearning {
         
         public static let shared = ImageColorizer()
         
-        private let modelUrlString = "https://github.com/William-Weng/WWMachineLearning_ImageColorizer/releases/download/1.0.0/CoremlColorizer.mlmodel"
-        private var model: MLModel?
+        public private(set) var model: MLModel?
+        
+        private let urlString = "https://github.com/William-Weng/WWMachineLearning_ImageColorizer/releases/download/1.0.0/CoremlColorizer.mlmodel"
 
         private init() {}
     }
@@ -27,41 +28,24 @@ extension WWMachineLearning {
 // MARK: - 公開函數
 public extension WWMachineLearning.ImageColorizer {
     
-    /// 載入模型 (從快取 or 網路重新下載)
+    /// [載入模型 (從快取 or 網路重新下載)](https://github.com/William-Weng/MLImageColorizer)
     /// - Parameters:
     ///   - type: 模型類型
     ///   - progress: 下載進度
     ///   - completion: Result<URL, Error>
     func loadModel(progress: ((WWNetworking.DownloadProgressInformation) -> Void)? = nil, completion: @escaping (Result<URL, Error>) -> Void) {
         
-        guard let modelUrl = URL(string: modelUrlString),
-              let folder = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
-        else {
-            return completion(.failure(WWMachineLearning.CustomError.notURL))
-        }
-        
-        let compiledModelUrl = WWMachineLearning.shared.compiledModelUrl(modelUrl, for: folder)
-        
-        WWMachineLearning.shared.createFolder(folder)
-        
-        if FileManager.default._fileExists(with: compiledModelUrl).isExist {
-            switch WWMachineLearning.shared.cacheModel(with: compiledModelUrl) {
-            case .failure(let error): return completion(.failure(error))
-            case .success(let model): self.model = model; return completion(.success(compiledModelUrl))
-            }
-        }
-        
-        WWMachineLearning.shared.downloadModel(modelUrl: modelUrl, folder: folder) { info in
-            progress?(info)
-        } completion: { downloadResult in
-            switch downloadResult {
+        WWMachineLearning.shared.loadModel(urlString: urlString) { downloadProgress in
+            progress?(downloadProgress)
+        } completion: { result in
+            switch result {
             case .failure(let error): completion(.failure(error))
-            case .success(let model): self.model = model; completion(.success(compiledModelUrl))
+            case .success(let model, let url): self.model = model; completion(.success(url))
             }
         }
     }
     
-    /// 使用ML模型將圖片彩色化
+    /// [使用ML模型將圖片彩色化](https://github.com/sgl0v/ImageColorizer)
     /// - Parameters:
     ///   - inputImage: UIImage
     ///   - completion: Result<UIImage?, Error>
@@ -81,7 +65,7 @@ public extension WWMachineLearning.ImageColorizer {
         }
     }
     
-    /// 載入模型 (從快取 or 網路重新下載)
+    /// [載入模型 (從快取 or 網路重新下載)](https://github.com/Vadbeg/colorization-coreml)
     /// - Parameters:
     ///   - type: 模型類型
     /// - Returns: Result<URL, Error>
@@ -92,7 +76,7 @@ public extension WWMachineLearning.ImageColorizer {
         }
     }
     
-    /// 使用ML模型將圖片彩色化
+    /// [使用ML模型將圖片彩色化](https://www.onswiftwings.com/posts/image-colorization-coreml/)
     /// - Parameters:
     ///   - inputImage: UIImage
     /// - Returns: Result<UIImage?, Error>
