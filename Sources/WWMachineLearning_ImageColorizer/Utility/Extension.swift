@@ -7,6 +7,38 @@
 
 import UIKit
 
+// MARK: - CGContext
+extension CGContext {
+    
+    /// 根據色域改建立CGContext
+    /// - Parameters:
+    ///   - size: CGSize
+    ///   - image: UIImage
+    /// - Returns: CGContext?
+    static func _build(size: CGSize, image: UIImage) -> CGContext? {
+                
+        guard let image = image.cgImage,
+              let colorSpace = image.colorSpace
+        else {
+            return nil
+        }
+        
+        let imageSize = CGSize(width: Int(size.width), height: Int(size.height))
+        
+        var bytesPerPixel = 0
+        var bytesPerRow = 0
+        var bitsPerComponent = 0
+        
+        switch colorSpace.model {
+        case .rgb: bytesPerPixel = 4; bytesPerRow = bytesPerPixel * Int(size.width); bitsPerComponent = 8
+        case .monochrome: bytesPerPixel = 1; bytesPerRow = bytesPerPixel * Int(size.width); bitsPerComponent = image.bitsPerComponent
+        default: return nil
+        }
+        
+        return CGContext._build(with: image.bitmapInfo.rawValue, size: imageSize, pixelData: nil, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, colorSpace: colorSpace)
+    }
+}
+
 // MARK: - UIImage
 extension UIImage {
     
@@ -18,41 +50,15 @@ extension UIImage {
         var resizedImage: UIImage?
         
         guard let image = cgImage,
-              let colorSpace = image.colorSpace
+              let context = CGContext._build(size: size, image: self)
         else {
             return resizedImage
         }
 
-        let imageSize = CGSize(width: Int(size.width), height: Int(size.height))
-
-        switch colorSpace.model {
-        case .rgb:
+        context.interpolationQuality = .high
+        context.draw(image, in: CGRect(origin: .zero, size: size))
             
-            let bytesPerPixel = 4
-            let bytesPerRow = bytesPerPixel * Int(size.width)
-            let bitsPerComponent = 8
-            
-            let context = CGContext._build(with: image.bitmapInfo.rawValue, size: imageSize, pixelData: nil, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, colorSpace: colorSpace)
-            
-            context?.interpolationQuality = .high
-            context?.draw(image, in: CGRect(origin: .zero, size: size))
-            
-            guard let scaledImage = context?.makeImage() else { return nil }
-            resizedImage = UIImage(cgImage: scaledImage)
-            
-        case .monochrome:
-            
-            let context = CGContext._build(with: image.bitmapInfo.rawValue, size: imageSize, pixelData: nil, bitsPerComponent: image.bitsPerComponent, bytesPerRow: Int(size.width), colorSpace: colorSpace)
-            
-            context?.interpolationQuality = .high
-            context?.draw(image, in: CGRect(origin: .zero, size: size))
-            
-            guard let scaledImage = context?.makeImage() else { return nil }
-            resizedImage = UIImage(cgImage: scaledImage)
-            
-        default: break
-        }
-        
-        return resizedImage
+        guard let scaledImage = context.makeImage() else { return nil }
+        return UIImage(cgImage: scaledImage)
     }
 }
