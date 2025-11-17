@@ -9,7 +9,7 @@
 
 ```bash
 dependencies: [
-    .package(url: "https://github.com/William-Weng/WWMachineLearning_ImageColorizer.git", .upToNextMajor(from: "1.0.3"))
+    .package(url: "https://github.com/William-Weng/WWMachineLearning_ImageColorizer.git", .upToNextMajor(from: "1.1.0"))
 ]
 ```
 
@@ -18,8 +18,8 @@ https://github.com/user-attachments/assets/f1138d36-8345-4eef-b243-1cc97c868eb9
 ### [Function - 可用函式](https://github.com/sgl0v/ImageColorizer)
 |函式|功能|
 |-|-|
-|loadModel(progress:completion:)|載入模型 (從快取 or 網路重新下載)|
-|loadModel()|載入模型 (從快取 or 網路重新下載)|
+|loadModel(folder:configuration:progress:completion:)|載入模型 (從快取 or 網路重新下載)|
+|loadModel(folder:configuration:)|載入模型 (從快取 or 網路重新下載)|
 |colorize(image:completion:)|使用ML模型將圖片彩色化|
 |colorize(image:)|使用ML模型將圖片彩色化|
 

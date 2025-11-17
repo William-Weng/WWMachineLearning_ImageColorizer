@@ -30,12 +30,13 @@ public extension WWMachineLearning.ImageColorizer {
     
     /// [載入模型 (從快取 or 網路重新下載)](https://github.com/William-Weng/MLImageColorizer)
     /// - Parameters:
-    ///   - type: 模型類型
+    ///   - folder: 下載資料夾
+    ///   - configuration: ML模型設定
     ///   - progress: 下載進度
     ///   - completion: Result<URL, Error>
-    func loadModel(progress: ((WWNetworking.DownloadProgressInformation) -> Void)? = nil, completion: @escaping (Result<URL, Error>) -> Void) {
+    func loadModel(folder: URL = .applicationDirectory, configuration: MLModelConfiguration = .init(), progress: ((WWNetworking.DownloadProgressInformation) -> Void)? = nil, completion: @escaping (Result<URL, Error>) -> Void) {
         
-        WWMachineLearning.shared.loadModel(urlString: urlString) { downloadProgress in
+        WWMachineLearning.shared.loadModel(urlString: urlString, folder: folder, configuration: configuration) { downloadProgress in
             progress?(downloadProgress)
         } completion: { result in
             switch result {
@@ -67,12 +68,21 @@ public extension WWMachineLearning.ImageColorizer {
     
     /// [載入模型 (從快取 or 網路重新下載)](https://github.com/Vadbeg/colorization-coreml)
     /// - Parameters:
-    ///   - type: 模型類型
-    /// - Returns: Result<URL, Error>
-    func loadModel() async -> Result<URL, Error> {
+    ///   - folder: 下載資料夾
+    ///   - configuration: ML模型設定
+    /// - Returns: AsyncThrowingStream<LoadModelEvent, Error>
+    func loadModel(folder: URL = .applicationDirectory, configuration: MLModelConfiguration = .init()) async -> AsyncThrowingStream<LoadModelEvent, Error> {
         
-        await withCheckedContinuation { continuation in
-            loadModel() { continuation.resume(returning: $0) }
+        AsyncThrowingStream { continuation in
+            
+            loadModel(folder: folder, configuration: configuration, progress: { progress in
+                continuation.yield(.progress(progress))
+            }, completion: { result in
+                switch result {
+                case .success(let url): continuation.yield(.completion(url)); continuation.finish()
+                case .failure(let error): continuation.finish(throwing: error)
+                }
+            })
         }
     }
     

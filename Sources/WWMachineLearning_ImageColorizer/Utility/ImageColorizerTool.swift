@@ -27,7 +27,6 @@ struct ImageColorizerTool {
         
         guard let cgImage = inputImage.cgImage else { return }
         
-        if (cgImage.colorSpace?.model == .monochrome) { rescaledImage = inputImage._monochromeColorSpaceToSRGB() }
         if (inputImage.scale != 1.0) { rescaledImage = inputImage._rescaled(1.0, orientation: inputImage.imageOrientation) }
         
         DispatchQueue.global().async {
@@ -75,7 +74,7 @@ private extension ImageColorizerTool {
             inputArray[inputIndex] = value as NSNumber
         })
         
-        return try MLDictionaryFeatureProvider(dictionary: [Constants.inputKey: inputArray])  // CoremlColorizerInput(input1: inputArray)
+        return try MLDictionaryFeatureProvider(dictionary: [Constants.input1: inputArray])  // CoremlColorizerInput(input1: inputArray)
     }
 
     /// 從 Core ML 模型輸出中提取 a 和 b 色彩通道，並與原始 L 通道結合 (原始圖片亮度 + 預測出的顏色值)
@@ -87,7 +86,7 @@ private extension ImageColorizerTool {
         
         var a = [Float]()
         var b = [Float]()
-                
+        
         for idx in 0..<Constants.inputDimension * Constants.inputDimension {
             
             guard let featureValue = colorizerOutput.featureValue(for: Constants.outptKey),
@@ -114,7 +113,7 @@ private extension ImageColorizerTool {
     /// - Returns: LabValues
     func preProcess(inputImage: UIImage) throws -> LabValues {
         
-        guard let normalizeImage = inputImage._normalize(with: Constants.inputSize, bitsPerComponent: 8, bitsPerPixel: 32),
+        guard let normalizeImage = inputImage._resizedImage(with: Constants.inputSize),
               let lab = LCM2Utility.shared.labValues(cgImage: normalizeImage.cgImage, bundle: .module)
         else {
             throw WWMachineLearning.CustomError.preprocessFailure
@@ -131,8 +130,8 @@ private extension ImageColorizerTool {
     func postProcess(inputImage: UIImage, outputLAB: LabValues) throws -> UIImage? {
         
         guard let image = LCM2Utility.shared.image(fromLabChannels: outputLAB.l, a: outputLAB.a, b: outputLAB.b, size: Constants.inputSize, bundle: .module),
-              let resultImage = image._normalize(with: inputImage.size, bitsPerComponent: 8, bitsPerPixel: 32),
-              let originalImage = inputImage._normalize(with: inputImage.size, bitsPerComponent: 8, bitsPerPixel: 32),
+              let resultImage = image._resizedImage(with: inputImage.size),
+              let originalImage = inputImage._resizedImage(with: inputImage.size),
               let resultImageLab = LCM2Utility.shared.labValues(cgImage: resultImage.cgImage, bundle: .module),
               let originalImageLab = LCM2Utility.shared.labValues(cgImage: originalImage.cgImage, bundle: .module)
         else {
@@ -144,4 +143,3 @@ private extension ImageColorizerTool {
         return colorizerImage
     }
 }
-

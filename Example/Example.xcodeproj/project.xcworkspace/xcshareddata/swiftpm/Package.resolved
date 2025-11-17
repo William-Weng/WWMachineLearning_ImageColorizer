@@ -1,22 +1,22 @@
 {
-  "originHash" : "664de1c94b99dab30dd189666dedf2ef5445a896a1f7e2c113cfd06cbe1c17b2",
+  "originHash" : "3812b510227b91953a003bcae4c5f54015d07a68a20a9485271dce17b735f79a",
   "pins" : [
     {
       "identity" : "wwhud",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWHUD",
       "state" : {
-        "revision" : "c60fc05a3033eafa736bd591e7041d79b5f6f209",
-        "version" : "1.4.0"
+        "revision" : "b8db2cdf70698c073842df293cfe0946ca0690d5",
+        "version" : "1.3.3"
       }
     },
     {
       "identity" : "wwmachinelearning_imagecolorizer",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/William-Weng/WWMachineLearning_ImageColorizer.git",
+      "location" : "https://github.com/William-Weng/WWMachineLearning_ImageColorizer",
       "state" : {
-        "revision" : "8059d779c1c4a132fa82668afcfe3ff9b94ba983",
-        "version" : "1.0.2"
+        "revision" : "72ee36f221a80864f35e1de7c5dcaf2616b73558",
+        "version" : "1.0.3"
       }
     },
     {
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWMachineLearning_Resnet50",
       "state" : {
-        "revision" : "b0bcd62c5ec8f860f22abfc882bf24aa9234035a",
-        "version" : "1.1.3"
+        "revision" : "e95bebed41d4a437e319429ac1fb77eecd02d85f",
+        "version" : "1.1.4"
       }
     },
     {
@@ -33,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWNetworking",
       "state" : {
-        "revision" : "141032e2894b6b25fabfbaef97e96363a2027f33",
-        "version" : "1.8.0"
+        "revision" : "48b103af5d09c4b3c56b184942e670ddf8dc5e92",
+        "version" : "1.8.12"
       }
     }
   ],
