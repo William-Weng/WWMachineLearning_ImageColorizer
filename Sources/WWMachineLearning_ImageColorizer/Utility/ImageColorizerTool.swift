@@ -29,9 +29,9 @@ struct ImageColorizerTool {
         
         if (inputImage.scale != 1.0) { rescaledImage = inputImage._rescaled(1.0, orientation: inputImage.imageOrientation) }
         
-        DispatchQueue.global().async {
-            let result = self.colorize(model: model, image: rescaledImage ?? inputImage)
-            DispatchQueue.main.async { completion(result) }
+        Task {
+            let result = colorize(model: model, image: rescaledImage ?? inputImage)
+            await MainActor.run { completion(result) }
         }
     }
 }

@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWMachineLearning_ImageColorizer",
       "state" : {
-        "revision" : "66424d87f8b9299fafec72690698751c91517a14",
-        "version" : "1.1.0"
+        "revision" : "c5ef93ef4f72b83ba75fb69b7567ce0695d9191b",
+        "version" : "1.1.1"
       }
     },
     {

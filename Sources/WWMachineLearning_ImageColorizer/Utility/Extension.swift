@@ -10,7 +10,7 @@ import UIKit
 // MARK: - CGContext
 extension CGContext {
     
-    /// 根據色域改建立CGContext
+    /// 建立CGContext (根據色域處理 - RGB / MONO)
     /// - Parameters:
     ///   - size: CGSize
     ///   - image: UIImage
@@ -25,9 +25,9 @@ extension CGContext {
         
         let imageSize = CGSize(width: Int(size.width), height: Int(size.height))
         
-        var bytesPerPixel = 0
-        var bytesPerRow = 0
-        var bitsPerComponent = 0
+        var bytesPerPixel = -1
+        var bytesPerRow = -1
+        var bitsPerComponent = -1
         
         switch colorSpace.model {
         case .rgb: bytesPerPixel = 4; bytesPerRow = bytesPerPixel * Int(size.width); bitsPerComponent = 8
@@ -57,7 +57,7 @@ extension UIImage {
 
         context.interpolationQuality = .high
         context.draw(image, in: CGRect(origin: .zero, size: size))
-            
+        
         guard let scaledImage = context.makeImage() else { return nil }
         return UIImage(cgImage: scaledImage)
     }

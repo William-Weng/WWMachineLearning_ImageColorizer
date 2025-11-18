@@ -58,12 +58,7 @@ public extension WWMachineLearning.ImageColorizer {
         var rescaledImage: UIImage?
         
         if (inputImage.scale != 1.0) { rescaledImage = inputImage._rescaled(1.0, orientation: inputImage.imageOrientation) }
-        
-        DispatchQueue.global().async {
-            ImageColorizerTool.shared.colorize(model: model, image: rescaledImage ?? inputImage) { result in
-                DispatchQueue.main.async { completion(result) }
-            }
-        }
+        ImageColorizerTool.shared.colorize(model: model, image: rescaledImage ?? inputImage) { completion($0) }
     }
     
     /// [載入模型 (從快取 or 網路重新下載)](https://github.com/Vadbeg/colorization-coreml)
