@@ -74,7 +74,7 @@ private extension ImageColorizerTool {
             inputArray[inputIndex] = value as NSNumber
         })
         
-        return try MLDictionaryFeatureProvider(dictionary: [Constants.input1: inputArray])  // CoremlColorizerInput(input1: inputArray)
+        return try MLDictionaryFeatureProvider(dictionary: [Constants.inputKey: inputArray])  // CoremlColorizerInput(input1: inputArray)
     }
 
     /// 從 Core ML 模型輸出中提取 a 和 b 色彩通道，並與原始 L 通道結合 (原始圖片亮度 + 預測出的顏色值)

@@ -16,7 +16,7 @@ extension ImageColorizerTool {
     struct Constants {
         
         // model.modelDescription.inputDescriptionsByName => ["input1": input1 : MultiArray (Float32, 1 × 1 × 256 × 256)]
-        static let input1 = "input1"
+        static let inputKey = "input1"
         static let inputDimension = 256
         static let inputSize = CGSize(width: inputDimension, height: inputDimension)
         static let coremlInputShape = [1, 1, NSNumber(value: Constants.inputDimension), NSNumber(value: Constants.inputDimension)]

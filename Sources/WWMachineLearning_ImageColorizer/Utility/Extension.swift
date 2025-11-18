@@ -23,19 +23,30 @@ extension CGContext {
             return nil
         }
         
-        let imageSize = CGSize(width: Int(size.width), height: Int(size.height))
+        let imageSize = size._Int()
         
         var bytesPerPixel = -1
-        var bytesPerRow = -1
         var bitsPerComponent = -1
         
         switch colorSpace.model {
-        case .rgb: bytesPerPixel = 4; bytesPerRow = bytesPerPixel * Int(size.width); bitsPerComponent = 8
-        case .monochrome: bytesPerPixel = 1; bytesPerRow = bytesPerPixel * Int(size.width); bitsPerComponent = image.bitsPerComponent
-        default: return nil
+        case .rgb: bytesPerPixel = 4; bitsPerComponent = 8
+        case .monochrome: bytesPerPixel = 1; bitsPerComponent = image.bitsPerComponent
+        default: break
         }
         
+        let bytesPerRow = bytesPerPixel * Int(size.width)
+        
         return CGContext._build(with: image.bitmapInfo.rawValue, size: imageSize, pixelData: nil, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, colorSpace: colorSpace)
+    }
+}
+
+// MARK: - CGSize
+extension CGSize {
+    
+    /// 轉成Int
+    /// - Returns: Self
+    func _Int() -> Self {
+        Self(width: Int(width), height: Int(height))
     }
 }
 

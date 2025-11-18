@@ -1,5 +1,5 @@
 {
-  "originHash" : "3812b510227b91953a003bcae4c5f54015d07a68a20a9485271dce17b735f79a",
+  "originHash" : "3b47d8b57ce681e206f5e3cd6c0597416d0b78df9b17fe116d844e93be618d2f",
   "pins" : [
     {
       "identity" : "wwhud",
@@ -8,15 +8,6 @@
       "state" : {
         "revision" : "bbdff687c88964328b17002bdf347451117355f5",
         "version" : "1.5.1"
-      }
-    },
-    {
-      "identity" : "wwmachinelearning_imagecolorizer",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/William-Weng/WWMachineLearning_ImageColorizer",
-      "state" : {
-        "revision" : "c5ef93ef4f72b83ba75fb69b7567ce0695d9191b",
-        "version" : "1.1.1"
       }
     },
     {
